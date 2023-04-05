@@ -56,6 +56,8 @@ export default function OAuthStep3({ accessToken, expiryTime, refreshToken, erro
       return
     }
     if (data.userPrincipalName !== siteConfig.userPrincipalName) {
+      console.log('data.userPrincipalName', data.userPrincipalName)
+      console.log('siteConfig.userPrincipalName', siteConfig.userPrincipalName)
       setButtonError(true)
       setButtonContent(
         <div>
