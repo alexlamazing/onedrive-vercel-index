@@ -257,7 +257,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     })
 
+    console.log('identityData>>>', identityData)
+
     if ('folder' in identityData) {
+      console.log('folder...')
       const { data: folderData } = await axios.get(`${requestUrl}${isRoot ? '' : ':'}/children`, {
         headers: { Authorization: `Bearer ${accessToken}` },
         params: {
@@ -269,6 +272,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           ...(sort ? { $orderby: sort } : {}),
         },
       })
+
+      console.log('folderData>>>', folderData)
 
       // Extract next page token from full @odata.nextLink
       const nextPage = folderData['@odata.nextLink']
@@ -286,6 +291,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ file: identityData })
     return
   } catch (error: any) {
+    console.log('error>>>', error)
     res.status(error?.response?.code ?? 500).json({ error: error?.response?.data ?? 'Internal server error.' })
     return
   }
